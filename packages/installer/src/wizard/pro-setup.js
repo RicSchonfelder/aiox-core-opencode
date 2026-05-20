@@ -173,9 +173,11 @@ class InlineLicenseClient {
                   ? parsed.error
                   : parsed;
               const err = new Error(
-                (errorBody && errorBody.message) || parsed.message || `HTTP ${res.statusCode}`,
+                (errorBody && errorBody.message) ||
+                  (parsed && parsed.message) ||
+                  `HTTP ${res.statusCode}`,
               );
-              err.code = (errorBody && errorBody.code) || parsed.code;
+              err.code = (errorBody && errorBody.code) || (parsed && parsed.code);
               err.httpStatus = res.statusCode;
               if (parsed && parsed.error) {
                 err.envelope = parsed; // full envelope for parseEnvelopeToAIOXError

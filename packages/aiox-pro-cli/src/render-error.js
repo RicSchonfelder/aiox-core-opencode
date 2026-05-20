@@ -11,6 +11,10 @@ const SUPPORT_URL = 'https://suporte.aiox.dev';
  */
 function renderError(err, write) {
   const out = write || ((line) => process.stderr.write(line + '\n'));
+  if (!err || typeof err !== 'object') {
+    out('✗ Erro inesperado.');
+    return;
+  }
   const meta = (err && err.metadata) || {};
   const recovery = Array.isArray(err && err.recovery) ? err.recovery : [];
   const recoveryHint = meta.recovery_hint;
